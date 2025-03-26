@@ -1,0 +1,37 @@
+{
+  "name": "permit-mongo-express-app",
+  "version": "1.0.0",
+  "description": "Express TypeScript Mongoose Project",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "npm run build && node ./dist/index.js",
+    "dev": "nodemon",
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "typescript",
+    "mongoose"
+  ],
+  "author": "Miracle Onyenma",
+  "license": "ISC",
+  "dependencies": {
+    "@untools/ip-url": "^0.1.0",
+    "@untools/port-gen": "^0.0.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.13.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.13",
+    "@typescript-eslint/eslint-plugin": "^8.28.0",
+    "@typescript-eslint/parser": "^8.28.0",
+    "eslint": "^9.23.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  }
+}
