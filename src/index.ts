@@ -1,6 +1,7 @@
 import express from "express";
 import connectDB from "./config/database";
 import userRoutes from "./routes/userRoutes";
+import authRoutes from "./routes/authRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import { formatIPUrl } from "@untools/ip-url";
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);
