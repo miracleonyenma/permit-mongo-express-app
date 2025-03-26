@@ -113,6 +113,6 @@ Distributed under the ISC License. See `LICENSE` for more information.
 
 ## Contact
 
-Miracle Onyenma - [@miracleonyenma](https://twitter.com/miracleonyenma)
+Miracle Onyenma - [@miracleio](https://twitter.com/miracleio)
 
 Project Link: [https://github.com/miracleonyenma/permit-mongo-express-app](https://github.com/miracleonyenma/permit-mongo-express-app)
