@@ -1,3 +1,5 @@
+// ./src/routes/companyRoutes.ts
+
 import express from "express";
 import {
   createCompany,

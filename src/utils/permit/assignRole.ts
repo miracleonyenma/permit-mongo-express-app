@@ -16,17 +16,20 @@ const assignRole = async ({
   user,
   role,
   tenantId,
+  resource_instance,
 }: {
   user: IUser;
   role: string;
   tenantId: string;
+  resource_instance?: string;
 }): Promise<void> => {
   try {
     // Use Permit.io API to assign the specified role to the user within the given tenant
-    await permit.api.users.assignRole({
+    await permit.api.assignRole({
       role, // The name of the role
       user: user?.id, // The unique user identifier
       tenant: tenantId, // The tenant context for the role assignment
+      ...(resource_instance && { resource_instance }), // The unique identifier of the resource instance
     });
   } catch (error) {
     // Log any errors encountered during role assignment
