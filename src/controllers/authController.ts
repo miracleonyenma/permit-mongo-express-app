@@ -3,6 +3,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/User";
 import { generateToken } from "../middleware/auth";
+import syncUserToPermit from "../utils/permit/syncUser";
 
 /**
  * Handles user registration process
@@ -41,6 +42,9 @@ export const registerUser = async (req, res) => {
 
     // Save the new user to the database
     await user.save();
+
+    // sync user to permit
+    await syncUserToPermit(user, "default");
 
     // Generate an authentication token for the new user
     const token = generateToken(user._id.toString());

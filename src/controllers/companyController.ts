@@ -2,7 +2,11 @@
 
 import Company, { ICompany } from "../models/Company";
 import Membership from "../models/Membership";
+import User from "../models/User";
 import mongoose from "mongoose";
+import createTenant from "../utils/permit/createTenant";
+import assignRole from "../utils/permit/assignRole";
+import syncUserToPermit from "../utils/permit/syncUser";
 
 /**
  * Creates a new company and automatically assigns the creator as its first member
@@ -32,6 +36,12 @@ export const createCompany = async (req, res) => {
     // Save the new company within the transaction
     await company.save({ session });
 
+    // create tenant in Permit.io
+    await createTenant({
+      key: company?.id,
+      name: company.name,
+    });
+
     // Create a membership record to associate the creator with the company
     const membership = new Membership({
       user: req.user._id,
@@ -41,6 +51,16 @@ export const createCompany = async (req, res) => {
 
     // Save the membership within the same transaction
     await membership.save({ session });
+
+    // sync user to new tenant in Permit.io
+    await syncUserToPermit(req.user, company?.id);
+
+    // assign admin role to the creator in the new tenant
+    await assignRole({
+      user: req.user,
+      tenantId: company?.id,
+      role: "admin",
+    });
 
     // Commit the transaction, ensuring both company and membership are saved atomically
     await session.commitTransaction();
@@ -117,7 +137,7 @@ export const getCompaniesForUser = async (req, res) => {
  */
 export const addMemberToCompany = async (req, res) => {
   try {
-    const { companyId, userId } = req.body;
+    const { companyId, userId, role } = req.body;
 
     // Verify user authentication before allowing member addition
     if (!req.user) {
@@ -152,6 +172,13 @@ export const addMemberToCompany = async (req, res) => {
 
     // Save the new membership
     await membership.save();
+
+    // assign "customer" or "agent" role to user in Permit.io
+    await assignRole({
+      role: role == "agent" ? "agent" : "customer",
+      user: await User.findById(userId),
+      tenantId: companyId,
+    });
 
     // Respond with successful membership creation details
     res.status(201).json({

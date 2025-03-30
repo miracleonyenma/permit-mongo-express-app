@@ -1,8 +1,11 @@
+// ./src/index.ts
+
 import express from "express";
 import connectDB from "./config/database";
 import userRoutes from "./routes/userRoutes";
 import authRoutes from "./routes/authRoutes";
 import companyRoutes from "./routes/companyRoutes";
+import ticketRoutes from "./routes/ticketRoutes";
 import { errorHandler } from "./middleware/errorHandler";
 import { formatIPUrl } from "@untools/ip-url";
 
@@ -20,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/companies", companyRoutes);
+app.use("/api/tickets", ticketRoutes);
 
 // Error Handling Middleware
 app.use(errorHandler);

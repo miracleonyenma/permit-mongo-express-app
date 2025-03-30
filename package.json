@@ -24,7 +24,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.13.0"
+    "mongoose": "^8.13.0",
+    "permitio": "^2.7.2-rc"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
